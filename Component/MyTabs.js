@@ -32,6 +32,7 @@ function MyTabs() {
                 headerShown: false,
                 tabBarActiveTintColor: '#4722B0',
                 tabBarInactiveTintColor: '#555061',
+                tabBarScrollEnabled: true,
                 tabBarStyle: {
                     color: 'white',
                     backgroundColor: '#201729',
