@@ -13,8 +13,8 @@ export default function App() {
                     headerShown: false,
                 }}
             >
-                <Stack.Screen name="MyTabs" component={MyTabs} />
                 <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="MyTabs" component={MyTabs} />
             </Stack.Navigator>
         </NavigationContainer>
     );
