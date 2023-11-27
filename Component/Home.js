@@ -5,7 +5,7 @@ function Home() {
         <ScrollView>
             <View style={{ backgroundColor: '#201729', width: '100%' }}>
                 <View style={{ width: 362, margin: 'auto' }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ width: 60, height: 60, borderRadius: 50, backgroundColor: '#6B329F' }}>
                                 <Image
