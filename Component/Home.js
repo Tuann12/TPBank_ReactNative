@@ -1,6 +1,6 @@
 import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
 
-function Home() {
+function Home({ navigation }) {
     return (
         <ScrollView>
             <View style={{ backgroundColor: '#201729', width: '100%' }}>
@@ -86,6 +86,7 @@ function Home() {
                             }}
                         >
                             <TouchableOpacity
+                                onPress={() => navigation.navigate('TransferMoney')}
                                 style={{
                                     width: 40,
                                     height: 40,

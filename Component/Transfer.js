@@ -1,6 +1,6 @@
 import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
 
-function Transfer() {
+function Transfer({ navigation }) {
     return (
         <ScrollView>
             <View style={{ backgroundColor: '#201729', width: '100%' }}>
@@ -35,7 +35,7 @@ function Transfer() {
                                 Trong <br /> TPBank
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('TransferMoney')}>
                             <Image
                                 style={{ width: 50, height: 50, marginLeft: 8, marginBottom: 5 }}
                                 source={require('../assets/bank.png')}
