@@ -148,6 +148,7 @@ function TransferMoney({ navigation }) {
                             }}
                         />
                         <TouchableOpacity
+                            onPress={() => navigation.navigate('Transaction')}
                             style={{
                                 width: 359,
                                 height: 56,
