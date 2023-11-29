@@ -1,6 +1,8 @@
 import { View, Image, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 
-function TransferMoney({ navigation }) {
+function TransferMoney({ navigation, route }) {
+    const dataBank = route.params;
+
     return (
         <ScrollView>
             <View style={{ backgroundColor: '#201729', width: '100%' }}>
@@ -74,27 +76,69 @@ function TransferMoney({ navigation }) {
                     </Text>
 
                     <View>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('SearchBank')}
-                            style={{
-                                width: 359,
-                                height: 57,
-                                borderWidth: 1,
-                                borderColor: '#555061',
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                marginBottom: 20,
-                            }}
-                        >
-                            <Text style={{ marginLeft: 15, fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>
-                                Chọn ngân hàng
-                            </Text>
-                            <Image
-                                style={{ marginRight: 15, width: 20, height: 20 }}
-                                source={require('../assets/arrowdown.png')}
-                            />
-                        </TouchableOpacity>
+                        {dataBank === undefined ? (
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('SearchBank')}
+                                style={{
+                                    width: 359,
+                                    height: 57,
+                                    borderWidth: 1,
+                                    borderColor: '#555061',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginBottom: 20,
+                                }}
+                            >
+                                <Text style={{ marginLeft: 15, fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>
+                                    Chọn ngân hàng
+                                </Text>
+                                <Image
+                                    style={{ marginRight: 15, width: 20, height: 20 }}
+                                    source={require('../assets/arrowdown.png')}
+                                />
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('SearchBank')}
+                                style={{
+                                    width: 359,
+                                    height: 57,
+                                    borderWidth: 1,
+                                    borderColor: '#555061',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginBottom: 20,
+                                }}
+                            >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Image
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                            margin: 10,
+                                            borderRadius: 50,
+                                            resizeMode: 'contain',
+                                        }}
+                                        source={dataBank.logo}
+                                    />
+                                    <View>
+                                        <Text
+                                            style={{
+                                                fontSize: 14,
+                                                fontWeight: 700,
+                                                color: '#FFFFFF',
+                                                marginVertical: 'auto',
+                                            }}
+                                        >
+                                            {dataBank.code}, {dataBank.shortName}
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+
                         <TextInput
                             placeholder="Số tài khoản"
                             style={{
