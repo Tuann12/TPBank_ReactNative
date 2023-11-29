@@ -1,8 +1,35 @@
 import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useData } from './DataContext';
+import { useState } from 'react';
 
 function Home({ navigation }) {
     const { dataAccount } = useData();
+    const [isHidden, setIsHidden] = useState(true);
+
+    const handleIconEye = () => {
+        if (isHidden) {
+            return (
+                <Image
+                    style={{ width: 32, height: 32, marginRight: 70, marginTop: -6 }}
+                    source={require('../assets/closedeye.png')}
+                />
+            );
+        } else {
+            return <Image style={{ width: 32, height: 32 }} source={require('../assets/icons8-eye-26.png')} />;
+        }
+    };
+
+    const handleMoneyDisplay = (money) => {
+        if (isHidden) {
+            return '********';
+        } else {
+            return money + ' VND';
+        }
+    };
+
+    const toggleEyeIcon = () => {
+        setIsHidden(!isHidden);
+    };
 
     return (
         <ScrollView>
@@ -65,12 +92,12 @@ function Home({ navigation }) {
                                         {item.number}
                                     </Text>
                                     <Text style={{ fontSize: 25, fontWeight: 600, color: '#FFFFFF' }}>
-                                        {item.money} VND
+                                        {handleMoneyDisplay(item.money)}
                                     </Text>
                                 </View>
                             ))}
-                            <TouchableOpacity style={{ marginTop: 25, marginRight: 60 }}>
-                                <Image style={{ width: 32, height: 32 }} source={require('../assets/closedeye.png')} />
+                            <TouchableOpacity onPress={toggleEyeIcon} style={{ marginTop: 24, marginRight: 60 }}>
+                                {handleIconEye()}
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{

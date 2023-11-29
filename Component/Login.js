@@ -7,6 +7,11 @@ function Login({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleLogin = () => {
         const loginSuccessful = account.every(
@@ -111,7 +116,7 @@ function Login({ navigation }) {
                         <TextInput
                             onChangeText={(Text) => setPassword(Text)}
                             value={password}
-                            secureTextEntry={true}
+                            secureTextEntry={showPassword}
                             placeholder="Mật khẩu"
                             style={{
                                 width: 250,
@@ -122,10 +127,16 @@ function Login({ navigation }) {
                                 marginLeft: 10,
                             }}
                         />
-                        <Image
-                            style={{ width: 32, height: 32, marginRight: 10 }}
-                            source={require('../assets/eye.png')}
-                        />
+                        <TouchableOpacity onPress={togglePasswordVisibility}>
+                            <Image
+                                style={{ width: 32, height: 32, marginRight: 10 }}
+                                source={
+                                    showPassword
+                                        ? require('../assets/eye.png')
+                                        : require('../assets/icons8-closed-eyes-64.png')
+                                }
+                            />
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <Text
