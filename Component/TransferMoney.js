@@ -35,7 +35,6 @@ function TransferMoney({ navigation, route }) {
             const randomIndex = Math.floor(Math.random() * characters.length);
             code += characters.charAt(randomIndex);
         }
-
         return code;
     };
 
@@ -99,7 +98,7 @@ function TransferMoney({ navigation, route }) {
                 <View
                     style={{
                         width: 359,
-                        height: 120,
+                        height: 80,
                         backgroundColor: '#291C36',
                         borderRadius: 10,
                         marginHorizontal: 'auto',
@@ -126,7 +125,6 @@ function TransferMoney({ navigation, route }) {
                     </View>
                     {dataAccount.map((item) => (
                         <View style={{ marginRight: 75 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F' }}>Nguồn tiền</Text>
                             <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>{item.number}</Text>
                             <Text style={{ fontSize: 20, fontWeight: 500, color: '#FFFFFF' }}>{item.money} VND</Text>
                         </View>
