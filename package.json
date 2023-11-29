@@ -19,6 +19,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-autocomplete-input": "^5.4.0",
     "react-native-navigation": "^7.37.1-hotfix.1",
     "react-native-web": "~0.19.6"
   },
