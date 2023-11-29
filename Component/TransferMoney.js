@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useData } from './DataContext';
-import { View, Image, Text, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { View, Image, Text, TouchableOpacity, TextInput } from 'react-native';
 
 function TransferMoney({ navigation, route }) {
     const dataBank = route.params;
@@ -9,6 +9,7 @@ function TransferMoney({ navigation, route }) {
     const [amountOfMoney, setAmountOfMoney] = useState('');
     const [contentTransfer, setContentTransfer] = useState('Nguyen Thanh Tuan chuyen tien');
     const { dataAccount, updateDataAccount } = useData();
+    const [randomCode, setRandomCode] = useState('');
 
     const handleTransferMoney = () => {
         const currentMoney = dataAccount[0].money;
@@ -24,6 +25,27 @@ function TransferMoney({ navigation, route }) {
             console.error('Không đủ số dư');
             return currentMoney;
         }
+    };
+
+    const generateRandomCode = (length) => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let code = '';
+
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            code += characters.charAt(randomIndex);
+        }
+
+        return code;
+    };
+
+    useEffect(() => {
+        handleGenerateCode();
+    }, []);
+
+    const handleGenerateCode = () => {
+        const newRandomCode = generateRandomCode(12);
+        setRandomCode(newRandomCode);
     };
 
     const handleAccountNumber = (text) => {
@@ -269,6 +291,7 @@ function TransferMoney({ navigation, route }) {
                     contentTransfer.length > 0 ? (
                         <TouchableOpacity
                             onPress={() => {
+                                handleGenerateCode();
                                 handleTransferMoney();
                                 navigation.navigate('Transaction', {
                                     dataBankLogo: dataBank !== undefined ? dataBank.logo : null,
@@ -277,6 +300,7 @@ function TransferMoney({ navigation, route }) {
                                     accountName,
                                     amountOfMoney,
                                     contentTransfer,
+                                    randomCode,
                                 });
                             }}
                             style={{

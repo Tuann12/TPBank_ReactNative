@@ -2,10 +2,17 @@ import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { useData } from './DataContext';
 
 function Transaction({ navigation, route }) {
-    const { dataBankLogo, dataBankShortName, accountNumber, amountOfMoney, contentTransfer, accountName } =
+    const { dataAccount } = useData();
+
+    const { dataBankLogo, dataBankShortName, accountNumber, amountOfMoney, contentTransfer, accountName, randomCode } =
         route.params;
 
-    const { dataAccount } = useData();
+    const getCurrentDateTime = () => {
+        const currentDateTime = new Date();
+        const formattedDateTime = currentDateTime.toLocaleString();
+        return formattedDateTime;
+    };
+    const currentTime = getCurrentDateTime();
 
     return (
         <View style={{ backgroundColor: '#201729' }}>
@@ -91,7 +98,7 @@ function Transaction({ navigation, route }) {
                             <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>{accountName}</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F', marginTop: 3 }}>
-                                    {amountOfMoney} |
+                                    {accountNumber} |
                                 </Text>
                                 <Text
                                     style={{
@@ -118,7 +125,7 @@ function Transaction({ navigation, route }) {
                         }}
                     >
                         <Text style={{ fontSize: 16, fontWeight: 500, color: '#75669F' }}>Mã giao dịch</Text>
-                        <Text style={{ fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>32142121312AB</Text>
+                        <Text style={{ fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>{randomCode}</Text>
                     </View>
                     <View
                         style={{
@@ -140,9 +147,7 @@ function Transaction({ navigation, route }) {
                         }}
                     >
                         <Text style={{ fontSize: 16, fontWeight: 500, color: '#75669F' }}>Thời gian</Text>
-                        <Text style={{ fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>
-                            16:26:11, Ngày 25/11/2023
-                        </Text>
+                        <Text style={{ fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>{currentTime}</Text>
                     </View>
                     <View
                         style={{
