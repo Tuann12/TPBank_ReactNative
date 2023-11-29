@@ -1,6 +1,9 @@
 import { View, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { useData } from './DataContext';
 
 function Home({ navigation }) {
+    const { dataAccount } = useData();
+
     return (
         <ScrollView>
             <View style={{ backgroundColor: '#201729', width: '100%' }}>
@@ -15,7 +18,9 @@ function Home({ navigation }) {
                             </View>
                             <View style={{ marginLeft: 10, marginTop: 10 }}>
                                 <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>Xin chào</Text>
-                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>TUANN12</Text>
+                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>
+                                    NGUYEN THANH TUAN
+                                </Text>
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row', marginVertical: 'auto' }}>
@@ -54,10 +59,16 @@ function Home({ navigation }) {
                                 marginRight: 10,
                             }}
                         >
-                            <View>
-                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>01234567899</Text>
-                                <Text style={{ fontSize: 25, fontWeight: 600, color: '#FFFFFF' }}>5,000,000 VND</Text>
-                            </View>
+                            {dataAccount.map((item) => (
+                                <View>
+                                    <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>
+                                        {item.number}
+                                    </Text>
+                                    <Text style={{ fontSize: 25, fontWeight: 600, color: '#FFFFFF' }}>
+                                        {item.money} VND
+                                    </Text>
+                                </View>
+                            ))}
                             <TouchableOpacity style={{ marginTop: 25, marginRight: 60 }}>
                                 <Image style={{ width: 32, height: 32 }} source={require('../assets/closedeye.png')} />
                             </TouchableOpacity>

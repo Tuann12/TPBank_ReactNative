@@ -1,18 +1,44 @@
 import { useState } from 'react';
+import { useData } from './DataContext';
+import { View, Image, Text, TouchableOpacity, TextInput, Modal } from 'react-native';
 
-import { View, Image, Text, TouchableOpacity, TextInput } from 'react-native';
-
-function TransferMoney({ navigation, route, accountNumber, amountOfMoney, contentTransfer }) {
+function TransferMoney({ navigation, route }) {
     const dataBank = route.params;
     const [accountNumber, setAccountNumber] = useState('');
+    const [accountName, setAccountName] = useState('');
     const [amountOfMoney, setAmountOfMoney] = useState('');
-    const [contentTransfer, setContentTransfer] = useState('');
+    const [contentTransfer, setContentTransfer] = useState('Nguyen Thanh Tuan chuyen tien');
+    const { dataAccount, updateDataAccount } = useData();
+
+    const handleTransferMoney = () => {
+        const currentMoney = dataAccount[0].money;
+        const transferAmount = parseInt(amountOfMoney, 10);
+
+        if (currentMoney >= transferAmount) {
+            const newMoney = currentMoney - transferAmount;
+            const updatedDataAccount = { ...dataAccount[0], money: newMoney };
+            updateDataAccount([updatedDataAccount]);
+
+            return newMoney;
+        } else {
+            console.error('Không đủ số dư');
+            return currentMoney;
+        }
+    };
 
     const handleAccountNumber = (text) => {
         if (/^\d+$/.test(text) || text === '') {
             setAccountNumber(text);
         }
     };
+
+    const handleAccountName = (text) => {
+        if (/^[a-zA-Z\s]+$/.test(text) || text === '') {
+            const uppercaseText = text.toUpperCase();
+            setAccountName(uppercaseText);
+        }
+    };
+
     const handleAmountOfMoney = (text) => {
         if (/^\d+$/.test(text) || text === '') {
             setAmountOfMoney(text);
@@ -76,11 +102,13 @@ function TransferMoney({ navigation, route, accountNumber, amountOfMoney, conten
                             source={require('../assets/icontpbank.webp')}
                         />
                     </View>
-                    <View style={{ marginRight: 75 }}>
-                        <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F' }}>Nguồn tiền</Text>
-                        <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>01234567899</Text>
-                        <Text style={{ fontSize: 20, fontWeight: 500, color: '#FFFFFF' }}>5,000,000 VND</Text>
-                    </View>
+                    {dataAccount.map((item) => (
+                        <View style={{ marginRight: 75 }}>
+                            <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F' }}>Nguồn tiền</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>{item.number}</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 500, color: '#FFFFFF' }}>{item.money} VND</Text>
+                        </View>
+                    ))}
                     <Image
                         style={{ width: 24, height: 24, marginVertical: 'auto', marginRight: 15 }}
                         source={require('../assets/arrowright.png')}
@@ -130,6 +158,8 @@ function TransferMoney({ navigation, route, accountNumber, amountOfMoney, conten
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
                                     style={{
+                                        borderWidth: 1,
+                                        borderColor: '#FFFFFF',
                                         width: 40,
                                         height: 40,
                                         margin: 10,
@@ -173,6 +203,26 @@ function TransferMoney({ navigation, route, accountNumber, amountOfMoney, conten
                             paddingLeft: 15,
                         }}
                     />
+
+                    <TextInput
+                        onChangeText={handleAccountName}
+                        value={accountName}
+                        placeholder="Tên tài khoản"
+                        style={{
+                            width: 359,
+                            height: 57,
+                            borderWidth: 1,
+                            borderColor: '#555061',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: 20,
+                            fontSize: 16,
+                            fontWeight: 500,
+                            color: '#FFFFFF',
+                            paddingLeft: 15,
+                        }}
+                    />
                     <TextInput
                         onChangeText={handleAmountOfMoney}
                         value={amountOfMoney}
@@ -194,9 +244,9 @@ function TransferMoney({ navigation, route, accountNumber, amountOfMoney, conten
                     />
 
                     <TextInput
+                        placeholder="Nôi dung chuyển tiền"
                         onChangeText={(text) => setContentTransfer(text)}
                         value={contentTransfer}
-                        placeholder="Nôi dung chuyển tiền"
                         style={{
                             width: 359,
                             height: 57,
@@ -214,10 +264,21 @@ function TransferMoney({ navigation, route, accountNumber, amountOfMoney, conten
                     />
                     {dataBank !== undefined &&
                     accountNumber.length > 0 &&
+                    amountOfMoney <= dataAccount[0].money &&
                     amountOfMoney.length > 0 &&
                     contentTransfer.length > 0 ? (
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('Transaction')}
+                            onPress={() => {
+                                handleTransferMoney();
+                                navigation.navigate('Transaction', {
+                                    dataBankLogo: dataBank !== undefined ? dataBank.logo : null,
+                                    dataBankShortName: dataBank !== undefined ? dataBank.shortName : null,
+                                    accountNumber,
+                                    accountName,
+                                    amountOfMoney,
+                                    contentTransfer,
+                                });
+                            }}
                             style={{
                                 width: 359,
                                 height: 56,
@@ -233,7 +294,6 @@ function TransferMoney({ navigation, route, accountNumber, amountOfMoney, conten
                     ) : (
                         <TouchableOpacity
                             disabled
-                            onPress={() => navigation.navigate('Transaction')}
                             style={{
                                 width: 359,
                                 height: 56,
@@ -242,7 +302,7 @@ function TransferMoney({ navigation, route, accountNumber, amountOfMoney, conten
                                 marginBottom: 20,
                             }}
                         >
-                            <Text style={{ fontSize: 16, fontWeight: 500, color: '#16151A', margin: 'auto' }}>
+                            <Text style={{ fontSize: 16, fontWeight: 500, color: '#FFFFFF', margin: 'auto' }}>
                                 Tiếp tục
                             </Text>
                         </TouchableOpacity>

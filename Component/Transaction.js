@@ -1,6 +1,12 @@
-import { View, Image, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { useData } from './DataContext';
 
-function Transaction({ navigation }) {
+function Transaction({ navigation, route }) {
+    const { dataBankLogo, dataBankShortName, accountNumber, amountOfMoney, contentTransfer, accountName } =
+        route.params;
+
+    const { dataAccount } = useData();
+
     return (
         <View style={{ backgroundColor: '#201729' }}>
             <View style={{ width: '100%', marginHorizontal: 'auto' }}>
@@ -32,7 +38,7 @@ function Transaction({ navigation }) {
                         Giao Dịch Thanh Công!
                     </Text>
                     <Text style={{ fontSize: 25, fontWeight: 500, color: '#FFFFFF', marginBottom: 10 }}>
-                        1,000,000 VND
+                        {amountOfMoney} VND
                     </Text>
                     <Text
                         style={{
@@ -54,28 +60,49 @@ function Transaction({ navigation }) {
                                 source={require('../assets/icontpbank.webp')}
                             />
                         </View>
-                        <View style={{ marginLeft: 15 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>NGUYEN THANH TUAN</Text>
-                            <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F', marginTop: 3 }}>
-                                123456789
-                            </Text>
-                        </View>
+                        {dataAccount.map((item) => (
+                            <View style={{ marginLeft: 15 }}>
+                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>
+                                    NGUYEN THANH TUAN
+                                </Text>
+                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F', marginTop: 3 }}>
+                                    {item.number}
+                                </Text>
+                            </View>
+                        ))}
                     </View>
+
                     <View style={{ flexDirection: 'row', marginLeft: 20, marginTop: 20 }}>
-                        <View style={{ width: 50, height: 50, borderRadius: 50, backgroundColor: '#6B329F' }}>
+                        <View>
                             <Image
-                                style={{ width: 30, height: 30, margin: 'auto' }}
-                                source={require('../assets/icontpbank.webp')}
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: '#FFFFFF',
+                                    width: 50,
+                                    height: 50,
+                                    margin: 'auto',
+                                    borderRadius: 50,
+                                    resizeMode: 'contain',
+                                }}
+                                source={dataBankLogo}
                             />
                         </View>
                         <View style={{ marginLeft: 15 }}>
-                            <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>NGUYEN THANH TUAN</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>{accountName}</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F', marginTop: 3 }}>
-                                    123456789 |
+                                    {amountOfMoney} |
                                 </Text>
-                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#75669F', marginTop: 3 }}>
-                                    VIETCOMBANK
+                                <Text
+                                    style={{
+                                        fontSize: 15,
+                                        fontWeight: 500,
+                                        color: '#75669F',
+                                        marginTop: 3,
+                                        marginLeft: 3,
+                                    }}
+                                >
+                                    {dataBankShortName}
                                 </Text>
                             </View>
                         </View>
@@ -102,9 +129,7 @@ function Transaction({ navigation }) {
                         }}
                     >
                         <Text style={{ fontSize: 16, fontWeight: 500, color: '#75669F' }}>Nội dung</Text>
-                        <Text style={{ fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>
-                            Nguyen thanh tuan chuyen tien
-                        </Text>
+                        <Text style={{ fontSize: 16, fontWeight: 500, color: '#FFFFFF' }}>{contentTransfer}</Text>
                     </View>
                     <View
                         style={{
@@ -134,16 +159,8 @@ function Transaction({ navigation }) {
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 'auto', marginBottom: 15 }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('TransferMoney')}
-                    style={{ backgroundColor: '#473A54', width: 160, height: 56, marginRight: 15, borderRadius: 5 }}
-                >
-                    <Text style={{ fontSize: 18, fontWeight: 700, color: '#FFFFFF', margin: 'auto' }}>
-                        Giao Dịch Khác
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
                     onPress={() => navigation.navigate('Trang chủ')}
-                    style={{ backgroundColor: '#6B329F', width: 185, height: 56, borderRadius: 5 }}
+                    style={{ backgroundColor: '#6B329F', width: 359, height: 56, borderRadius: 5 }}
                 >
                     <Text style={{ fontSize: 18, fontWeight: 700, color: '#FF9900', margin: 'auto' }}>Trang Chủ</Text>
                 </TouchableOpacity>

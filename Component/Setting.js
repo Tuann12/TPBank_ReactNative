@@ -48,7 +48,7 @@ function Setting({ navigation }) {
                         </View>
                         <View>
                             <Text style={{ fontSize: 20, fontWeight: 600, color: '#FFFFFF', marginBottom: 5 }}>
-                                Nguyen Thanh Tuan
+                                NGUYEN THANH TUAN
                             </Text>
                             <View
                                 style={{

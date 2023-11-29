@@ -1,6 +1,29 @@
-import { TouchableOpacity, View, Text, TextInput, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, TextInput, Image, Modal } from 'react-native';
+import { useData } from './DataContext';
+import { useState } from 'react';
 
 function Login({ navigation }) {
+    const { account } = useData();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState(false);
+
+    const handleLogin = () => {
+        const loginSuccessful = account.every(
+            (acc) => acc.username === username && String(acc.password) === String(password),
+        );
+
+        if (loginSuccessful) {
+            navigation.navigate('MyTabs');
+        } else {
+            setLoginError(true);
+        }
+    };
+
+    const closeErrorModal = () => {
+        setLoginError(false);
+    };
+
     return (
         <View style={{ backgroundColor: '#F7E9FF' }}>
             <View style={{ width: 330, margin: 'auto' }}>
@@ -52,6 +75,8 @@ function Login({ navigation }) {
                             source={require('../assets/user.png')}
                         />
                         <TextInput
+                            onChangeText={(Text) => setUsername(Text)}
+                            value={username}
                             placeholder="Tên đăng nhập"
                             style={{
                                 width: 250,
@@ -84,6 +109,9 @@ function Login({ navigation }) {
                             source={require('../assets/khoa.png')}
                         />
                         <TextInput
+                            onChangeText={(Text) => setPassword(Text)}
+                            value={password}
+                            secureTextEntry={true}
                             placeholder="Mật khẩu"
                             style={{
                                 width: 250,
@@ -113,20 +141,92 @@ function Login({ navigation }) {
                     Không đăng nhập được?
                 </Text>
                 <View>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('MyTabs')}
-                        style={{
-                            width: 330,
-                            height: 50,
-                            borderRadius: 30,
-                            backgroundColor: '#4722B0',
-                            marginBottom: 15,
-                        }}
+                    {username == '' && password == '' ? (
+                        <TouchableOpacity
+                            disabled
+                            onPress={handleLogin}
+                            style={{
+                                width: 330,
+                                height: 50,
+                                borderRadius: 30,
+                                backgroundColor: '#473A54',
+                                marginBottom: 15,
+                            }}
+                        >
+                            <Text style={{ color: '#FF9900', margin: 'auto', fontSize: 15, fontWeight: 600 }}>
+                                Đăng nhập
+                            </Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={handleLogin}
+                            style={{
+                                width: 330,
+                                height: 50,
+                                borderRadius: 30,
+                                backgroundColor: '#4722B0',
+                                marginBottom: 15,
+                            }}
+                        >
+                            <Text style={{ color: '#FF9900', margin: 'auto', fontSize: 15, fontWeight: 600 }}>
+                                Đăng nhập
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    <Modal
+                        transparent={true}
+                        animationType="fade"
+                        visible={loginError}
+                        onRequestClose={closeErrorModal}
                     >
-                        <Text style={{ color: '#FF9900', margin: 'auto', fontSize: 15, fontWeight: 600 }}>
-                            Đăng nhập
-                        </Text>
-                    </TouchableOpacity>
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: 300,
+                                    height: 140,
+                                    backgroundColor: '#291C36',
+                                    borderRadius: 10,
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontSize: 20,
+                                        fontWeight: 600,
+                                        color: '#FFFFFF',
+                                        marginHorizontal: 'auto',
+                                        marginTop: 15,
+                                    }}
+                                >
+                                    Thông báo
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        color: '#75669F',
+                                        textAlign: 'center',
+                                        marginVertical: 15,
+                                    }}
+                                >
+                                    Tài khoản hoặc mật khẩu của bạn không đúng!
+                                </Text>
+                                <TouchableOpacity onPress={() => setLoginError(false)} style={{ marginBottom: 20 }}>
+                                    <Text style={{ fontSize: 20, fontWeight: 600, color: '#FF9900', marginTop: 10 }}>
+                                        Đóng
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+
                     <TouchableOpacity style={{ width: 330, height: 50, borderRadius: 30, backgroundColor: '#CEAEE8' }}>
                         <Text style={{ color: '#000000', margin: 'auto', fontSize: 15, fontWeight: 600 }}>
                             Mở tài khoản online

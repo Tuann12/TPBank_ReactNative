@@ -17,14 +17,6 @@ function SearchBank({ navigation }) {
         setBank(filteredData.slice(0, 10));
     };
 
-    const pressHandler = ({ item }) => {
-        navigation.navigate('TransferMoney', {
-            logo: item.logo,
-            code: item.code,
-            shortName: item.shortName,
-        });
-    };
-
     return (
         <View style={{ width: '100%', backgroundColor: '#201729' }}>
             <View style={{ width: 359, marginHorizontal: 'auto', backgroundColor: '#201729' }}>
