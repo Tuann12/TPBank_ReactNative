@@ -129,10 +129,6 @@ function TransferMoney({ navigation, route }) {
                             <Text style={{ fontSize: 20, fontWeight: 500, color: '#FFFFFF' }}>{item.money} VND</Text>
                         </View>
                     ))}
-                    <Image
-                        style={{ width: 24, height: 24, marginVertical: 'auto', marginRight: 15 }}
-                        source={require('../assets/arrowright.png')}
-                    />
                 </View>
                 <Text style={{ fontSize: 15, fontWeight: 600, color: '#FFFFFF', marginVertical: 20 }}>
                     CHUYỂN TIỀN ĐẾN
