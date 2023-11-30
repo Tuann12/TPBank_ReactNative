@@ -103,7 +103,6 @@ function TransferMoney({ navigation, route }) {
                         borderRadius: 10,
                         marginHorizontal: 'auto',
                         flexDirection: 'row',
-                        justifyContent: 'space-between',
                         alignItems: 'center',
                         marginTop: 20,
                     }}
@@ -114,7 +113,6 @@ function TransferMoney({ navigation, route }) {
                             height: 60,
                             borderRadius: 50,
                             backgroundColor: '#6B329F',
-
                             marginLeft: 15,
                         }}
                     >
@@ -124,7 +122,7 @@ function TransferMoney({ navigation, route }) {
                         />
                     </View>
                     {dataAccount.map((item) => (
-                        <View style={{ marginRight: 75 }}>
+                        <View style={{ marginLeft: 15 }}>
                             <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>{item.number}</Text>
                             <Text style={{ fontSize: 20, fontWeight: 500, color: '#FFFFFF' }}>{item.money} VND</Text>
                         </View>
