@@ -39,7 +39,6 @@ function MyTabs() {
                     borderTopColor: '#555061',
                     height: 70,
                     padding: 10,
-                    marginBottom: 10,
                 },
                 tabBarLabelStyle: {
                     fontSize: 14,
