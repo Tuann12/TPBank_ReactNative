@@ -179,6 +179,7 @@ function TransferMoney({ navigation, route }) {
                                         margin: 10,
                                         borderRadius: 50,
                                         resizeMode: 'contain',
+                                        backgroundColor: '#FFFFFF',
                                     }}
                                     source={dataBank.logo}
                                 />

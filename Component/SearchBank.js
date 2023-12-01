@@ -84,6 +84,7 @@ function SearchBank({ navigation }) {
                                             margin: 10,
                                             borderRadius: 50,
                                             resizeMode: 'contain',
+                                            backgroundColor: '#FFFFFF',
                                         }}
                                         source={item.logo}
                                     />

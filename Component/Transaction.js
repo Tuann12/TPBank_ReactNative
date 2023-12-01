@@ -90,6 +90,7 @@ function Transaction({ navigation, route }) {
                                     margin: 'auto',
                                     borderRadius: 50,
                                     resizeMode: 'contain',
+                                    backgroundColor: '#FFFFFF',
                                 }}
                                 source={dataBankLogo}
                             />
