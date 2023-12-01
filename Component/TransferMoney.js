@@ -8,7 +8,7 @@ function TransferMoney({ navigation, route }) {
     const [accountName, setAccountName] = useState('');
     const [amountOfMoney, setAmountOfMoney] = useState('');
     const [contentTransfer, setContentTransfer] = useState('Nguyen Thanh Tuan chuyen tien');
-    const { dataAccount, updateDataAccount } = useData();
+    const { dataAccount, updateDataAccount, formatMoney } = useData();
     const [randomCode, setRandomCode] = useState('');
 
     const handleTransferMoney = () => {
@@ -124,7 +124,9 @@ function TransferMoney({ navigation, route }) {
                     {dataAccount.map((item) => (
                         <View style={{ marginLeft: 15 }}>
                             <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFFFFF' }}>{item.number}</Text>
-                            <Text style={{ fontSize: 20, fontWeight: 500, color: '#FFFFFF' }}>{item.money} VND</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 500, color: '#FFFFFF' }}>
+                                {formatMoney(item.money)} VND
+                            </Text>
                         </View>
                     ))}
                 </View>

@@ -2,7 +2,7 @@ import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { useData } from './DataContext';
 
 function Transaction({ navigation, route }) {
-    const { dataAccount } = useData();
+    const { dataAccount, formatMoney } = useData();
 
     const { dataBankLogo, dataBankShortName, accountNumber, amountOfMoney, contentTransfer, accountName, randomCode } =
         route.params;
@@ -45,7 +45,7 @@ function Transaction({ navigation, route }) {
                         Giao Dịch Thanh Công!
                     </Text>
                     <Text style={{ fontSize: 25, fontWeight: 500, color: '#FFFFFF', marginBottom: 10 }}>
-                        {amountOfMoney} VND
+                        {formatMoney(amountOfMoney)} VND
                     </Text>
                     <Text
                         style={{

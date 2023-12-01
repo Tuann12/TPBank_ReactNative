@@ -2,6 +2,10 @@ import React, { createContext, useContext, useState } from 'react';
 
 const DataContext = createContext();
 
+const formatMoney = (amount) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
 export const DataProvider = ({ children }) => {
     const [dataAccount, setDataAccount] = useState([
         {
@@ -26,7 +30,7 @@ export const DataProvider = ({ children }) => {
     };
 
     return (
-        <DataContext.Provider value={{ dataAccount, updateDataAccount, account, updateAccount }}>
+        <DataContext.Provider value={{ dataAccount, updateDataAccount, account, updateAccount, formatMoney }}>
             {children}
         </DataContext.Provider>
     );

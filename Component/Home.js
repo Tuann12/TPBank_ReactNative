@@ -3,7 +3,7 @@ import { useData } from './DataContext';
 import { useState } from 'react';
 
 function Home({ navigation }) {
-    const { dataAccount } = useData();
+    const { dataAccount, formatMoney } = useData();
     const [isHidden, setIsHidden] = useState(true);
 
     const handleIconEye = () => {
@@ -23,7 +23,7 @@ function Home({ navigation }) {
         if (isHidden) {
             return '********';
         } else {
-            return money + ' VND';
+            return formatMoney(money) + ' VND';
         }
     };
 
